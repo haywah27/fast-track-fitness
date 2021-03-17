@@ -21,4 +21,11 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/populate', { us
 
 app.use('/', routes);
 
-app.listen(PORT, (err) => console.log(`App is running at: http://localhost/${PORT}`));
+mongoose.connection.on('error', (err) =>
+  console.log(`error in mongoose conneciton: ${err.message}`)
+);
+
+mongoose.connection.once('open', () => {
+  console.log('mongoose connected!');
+  app.listen(PORT, (err) => console.log(`App is running at: http://localhost/${PORT}`));
+});
