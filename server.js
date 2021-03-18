@@ -1,7 +1,6 @@
 const express = require('express');
 const logger = require('morgan');
 const mongoose = require('mongoose');
-const routes = require('./routes/html-routes')
 
 const PORT = process.env.PORT || 3000;
 
@@ -16,7 +15,8 @@ app.use(express.static('public'));
 
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/populate', { useNewUrlParser: true });
 
-app.use('/', routes);
+app.use(require("./routes/api-routes"));
+app.use(require("./routes/html-routes"));
 
 mongoose.connection.on('error', (err) =>
   console.log(`error in mongoose conneciton: ${err.message}`)
