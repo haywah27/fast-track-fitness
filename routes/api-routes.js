@@ -13,9 +13,15 @@ router.post("/api/workouts", (req, res) => {
 });
 
 // read workout
-// router.get("/api/workouts", (req, res) => {
-  
-// });
+router.get("/api/workouts", (req, res) => {
+    Workout.find({})
+    .then(data => {
+        res.json(data)
+    })
+    .catch(err => {
+        res.json(err)
+    })
+});
 
 // // update workout
 // router.put("/api/workouts:id", (req, res) => {
