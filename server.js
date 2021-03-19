@@ -25,7 +25,7 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout",
 app.use(require("./routes/html-routes.js"));
 app.use(require("./routes/api-routes.js"));
 
-mongoose.connection.on('error', (err) =>
+mongoose.connection.on('error', (err) => 
   console.log(`error in mongoose conneciton: ${err.message}`)
 );
 
