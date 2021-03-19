@@ -12,19 +12,19 @@ const workoutSchema = new Schema({
       type: {
         type: String,
         trim: true,
-        validate: [({ length }) => length <= 50, 'Too many characters, please enter condensed exercise.'],
-        required: true
+        validate: [({ length }) => length <= 100, 'Too many characters, please enter condensed exercise.'],
+        required: "the type is a requirement"
       },
       name: {
         type: String,
         trim: true,
-        validate: [({ length }) => length <= 50, 'Too many characters, please enter condensed name.'],
-        required: true
+        validate: [({ length }) => length <= 100, 'Too many characters, please enter condensed name.'],
+        required: "the name is a requirement"
       },
       duration: {
         type: Number,
         trim: true,
-        required: true
+        required: "the duration is a requirement"
       },
       weight: {
         type: Number,
@@ -45,19 +45,8 @@ const workoutSchema = new Schema({
     }
   ]
 },
-{
-  toJSON: {
-    // include any virtual properties when data is requested
-    virtuals: true
-  }
-});
+);
 
-workoutSchema.virtual("totalDuration").get(function() {
-  // "reduce" array of exercises down to just the sum of their durations
-  return this.exercises.reduce((total, exercise) => {
-    return total + exercise.duration;
-  }, 0);
-});
   
   
 const Workout = mongoose.model("Workout", workoutSchema);
