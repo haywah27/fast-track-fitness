@@ -11,12 +11,12 @@ router.post("/api/workouts", ({ body }, res) => {
 });
 
 // read workout
-router.get("/api/workouts", (req, res) => {
-    db.Workout.find({}).then(response => {
-        res.json(response);
-    }).catch(err => {
-        res.json(err);
-    });
+router.get("/api/workouts", async (req, res) => {
+    res.json(
+      await db.Workout.aggregate([
+        { $addFields: { totalDuration: { $sum: "$exercises.duration" } } },
+      ])
+    );
 });
 
 // update workout
