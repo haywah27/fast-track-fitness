@@ -38,10 +38,14 @@ router.put("/api/workouts/:id", (req, res) => {
 
 // route for workout dashboard
 router.get("/api/workouts/range", async (req, res) => {
+    
     res.json(
-      await db.Workout.aggregate([
+     await db.Workout.aggregate([
         { $addFields: { totalDuration: { $sum: "$exercises.duration" } } },
-      ]).limit(7)
+        { $sort : { day : -1 } },
+        { $limit : 7 },
+        { $sort : { day : 1 } }
+      ])
     );
 });
 
